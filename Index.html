@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capsula Corporation · World Wide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:  #08080a;
+    --dark:   #111114;
+    --border: rgba(255,255,255,0.08);
+    --gold:   #c8a84b;
+    --gold2:  #e5cd85;
+    --white:  #eeebe5;
+    --muted:  rgba(238,235,229,0.45);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 52px;
+    transition: background .4s, border-color .4s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(8,8,10,.93);
+    border-color: var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+  }
+  .logo span { font-style: italic; color: var(--white); }
+  .nav-email {
+    font-size: .7rem; letter-spacing: .1em;
+    color: var(--muted); text-decoration: none;
+    transition: color .25s;
+  }
+  .nav-email:hover { color: var(--gold); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 52px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(200,168,75,.07) 0%, transparent 65%),
+      linear-gradient(160deg, #111114 0%, #08080a 100%);
+  }
+  /* Anel decorativo */
+  .ring {
+    position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
+    width: 380px; height: 380px; border-radius: 50%;
+    border: 1px solid rgba(200,168,75,.15);
+    pointer-events: none;
+  }
+  .ring::after {
+    content: ''; position: absolute; inset: 40px; border-radius: 50%;
+    border: 1px solid rgba(200,168,75,.07);
+  }
+  .ring::before {
+    content: ''; position: absolute; inset: -40px; border-radius: 50%;
+    border: 1px solid rgba(200,168,75,.05);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 580px; }
+
+  .eyebrow {
+    font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    opacity: 0; animation: up .7s .15s forwards;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 300; line-height: 1.08; letter-spacing: -.01em;
+    opacity: 0; animation: up .8s .28s forwards;
+  }
+  h1 em { font-style: italic; color: var(--gold2); }
+
+  .hero-desc {
+    margin-top: 24px; font-size: .9rem; line-height: 1.85;
+    color: var(--muted); max-width: 420px;
+    opacity: 0; animation: up .8s .42s forwards;
+  }
+  .hero-actions {
+    margin-top: 40px; display: flex; gap: 18px; align-items: center;
+    opacity: 0; animation: up .8s .56s forwards;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    padding: 13px 30px; text-decoration: none; display: inline-block;
+    transition: .25s;
+  }
+  .btn-solid { background: var(--gold); color: var(--black); font-weight: 500; }
+  .btn-solid:hover { background: var(--gold2); }
+  .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  @keyframes up {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* LINHA DIVISÓRIA */
+  .sep {
+    height: 1px; background: var(--border); margin: 0 52px;
+  }
+
+  /* SOBRE */
+  #sobre {
+    padding: 100px 52px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: start;
+  }
+  .tag {
+    font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px; display: block;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300; line-height: 1.2;
+    color: var(--white);
+  }
+  h2 em { font-style: italic; color: var(--gold2); }
+  .body-text { font-size: .88rem; line-height: 1.9; color: var(--muted); }
+  .body-text p + p { margin-top: 16px; }
+
+  .sobre-right { display: flex; flex-direction: column; gap: 28px; padding-top: 8px; }
+  .pillar {
+    padding: 28px 26px;
+    border: 1px solid var(--border);
+    background: var(--dark);
+    transition: border-color .3s;
+  }
+  .pillar:hover { border-color: rgba(200,168,75,.25); }
+  .pillar-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400; color: var(--white); margin-bottom: 8px;
+  }
+  .pillar-desc { font-size: .8rem; line-height: 1.75; color: var(--muted); }
+
+  /* CONTATO */
+  #contato {
+    padding: 100px 52px;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: start;
+  }
+  .contact-item { margin-top: 28px; }
+  .contact-label {
+    font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .contact-val {
+    font-size: .92rem; color: var(--white);
+    text-decoration: none; display: block;
+    transition: color .25s;
+  }
+  a.contact-val:hover { color: var(--gold); }
+
+  /* FORMULÁRIO */
+  .form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 7px; }
+  input, textarea, select {
+    width: 100%; background: rgba(255,255,255,.04);
+    border: 1px solid var(--border); color: var(--white);
+    padding: 12px 16px; font-family: 'DM Sans', sans-serif;
+    font-size: .85rem; outline: none;
+    transition: border-color .25s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: rgba(200,168,75,.35); }
+  textarea { height: 110px; resize: none; }
+  ::placeholder { color: rgba(238,235,229,.2); }
+  select option { background: #111114; }
+
+  /* FOOTER */
+  footer {
+    padding: 36px 52px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .footer-logo span { font-style: italic; color: var(--muted); }
+  .footer-copy { font-size: .62rem; letter-spacing: .1em; color: rgba(238,235,229,.2); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.vis { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 28px; }
+    #hero { padding: 110px 28px 70px; }
+    .ring { display: none; }
+    #sobre, #contato { grid-template-columns: 1fr; padding: 70px 28px; gap: 48px; }
+    .sep { margin: 0 28px; }
+    footer { padding: 28px; flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 560px) {
+    .form-row { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Capsula <span>Corp.</span></a>
+  <a href="mailto:capsula.corporationww@gmail.com" class="nav-email">capsula.corporationww@gmail.com</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="ring"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Capsula Corporation · World Wide</div>
+    <h1>Soluções que<br/><em>encapsulam</em><br/>o futuro.</h1>
+    <p class="hero-desc">
+      Desenvolvemos produtos e serviços inovadores para empresas que constroem o amanhã. Tecnologia, estratégia e presença global a serviço das suas metas.
+    </p>
+    <div class="hero-actions">
+      <a href="#sobre" class="btn btn-solid">Conheça a empresa</a>
+      <a href="#contato" class="btn btn-outline">Fale conosco</a>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="reveal">
+    <span class="tag">Quem somos</span>
+    <h2>Uma empresa global <em>focada em resultados.</em></h2>
+    <div class="body-text" style="margin-top:22px;">
+      <p>A Capsula Corporation World Wide é uma empresa de soluções corporativas com atuação internacional. Trabalhamos com tecnologia, desenvolvimento de produtos e consultoria estratégica para clientes que buscam crescimento sustentável e diferencial competitivo.</p>
+      <p>Nossa missão é encapsular a essência de cada negócio e transformá-la em resultados concretos — com eficiência, clareza e compromisso com a excelência em cada etapa.</p>
+    </div>
+  </div>
+
+  <div class="sobre-right reveal">
+    <div class="pillar">
+      <div class="pillar-name">Tecnologia &amp; Inovação</div>
+      <div class="pillar-desc">Desenvolvimento de produtos digitais, aplicativos e plataformas tecnológicas para os mais diversos setores.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-name">Consultoria Estratégica</div>
+      <div class="pillar-desc">Suporte a tomada de decisão, planejamento corporativo e posicionamento de mercado para empresas em crescimento.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-name">Presença Mundial</div>
+      <div class="pillar-desc">Operamos com parceiros e clientes em diferentes países, com visão global e execução local.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="reveal">
+    <span class="tag">Contato</span>
+    <h2>Vamos <em>conversar.</em></h2>
+    <p class="body-text" style="margin-top:20px;">
+      Tem um projeto, uma ideia ou quer saber mais sobre a Capsula Corporation? Entre em contato — respondemos o mais breve possível.
+    </p>
+
+    <div class="contact-item">
+      <div class="contact-label">E-mail corporativo</div>
+      <a href="mailto:capsula.corporationww@gmail.com" class="contact-val">capsula.corporationww@gmail.com</a>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="form">
+      <div class="form-row">
+        <div>
+          <label>Nome</label>
+          <input type="text" placeholder="Seu nome" />
+        </div>
+        <div>
+          <label>Empresa</label>
+          <input type="text" placeholder="Sua empresa" />
+        </div>
+      </div>
+      <div>
+        <label>E-mail</label>
+        <input type="email" placeholder="voce@empresa.com" />
+      </div>
+      <div>
+        <label>Assunto</label>
+        <select>
+          <option value="" disabled selected>Selecione um assunto</option>
+          <option>Tecnologia &amp; Desenvolvimento</option>
+          <option>Consultoria Estratégica</option>
+          <option>Parcerias Comerciais</option>
+          <option>Outros</option>
+        </select>
+      </div>
+      <div>
+        <label>Mensagem</label>
+        <textarea placeholder="Descreva como podemos ajudar…"></textarea>
+      </div>
+      <div>
+        <a href="#" class="btn btn-solid" style="display:inline-block;">Enviar mensagem</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Capsula <span>Corporation World Wide</span></div>
+  <div class="footer-copy">© 2024 Capsula Corporation World Wide. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+</script>
+</body>
+</html>
